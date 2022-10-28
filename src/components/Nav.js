@@ -1,6 +1,7 @@
-import classes from '../styles/Nav.module.css';
-import Account from './Account';
+import classes from "../styles/Nav.module.css";
+import Account from "./Account";
 import logo from "../assets/images/logo-bg.png";
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   return (
@@ -8,13 +9,13 @@ export default function Nav() {
       <nav className={classes.nav}>
         <ul>
           <li>
-            <a href="index.html" className={classes.brand}>
+            <Link to="/" className={classes.brand}>
               <img src={logo} alt="React Quiz App" />
               <h3>React Quiz App</h3>
-            </a>
+            </Link>
           </li>
         </ul>
-        <Account/>
+        <Account />
       </nav>
     </>
   );
