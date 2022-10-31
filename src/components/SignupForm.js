@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "../styles/SignUp.module.css";
 import Button from "./Button";
 import Checkbox from "./Checkbox";
@@ -18,6 +18,7 @@ export default function SignupForm() {
   const [loading, setLoading] = useState("");
 
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,12 +31,17 @@ export default function SignupForm() {
       setError("");
       setLoading(true);
       await signup(email,password,userName);
+      navigate("/");
 
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      setError("Failed to create an account!");
+    }
   }
 
   return (
-    <Form className={`${classes.signup} form`}>
+    <Form className={`${classes.signup} form`} onSubmit={handleSubmit}>
       <TextInput
         type="text"
         placeholder="Enter name"
@@ -75,8 +81,8 @@ export default function SignupForm() {
         onChange={(e) => setAgree(e.target.value)}
         required
       />
-      <Button>
-        <span>Submit now</span>
+      <Button type="submit" disabled={loading}>
+        <span>Signup now</span>
       </Button>
 
       {error && <p className="error">{error}</p>}
